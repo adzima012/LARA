@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 // Halaman form pesan (tanpa harus login)
 Route::get('/messages', function () {
-    return view('messages');
+    return view('messages.messages'); // ✅ Sesuai struktur folder
 })->name('messages');
 
 // Menyimpan pesan dari form (tanpa harus login)

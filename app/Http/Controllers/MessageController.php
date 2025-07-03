@@ -15,7 +15,7 @@ class MessageController extends Controller
     {
         $messages = Message::where('user_id', Auth::id())
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('dashboard', compact('messages'));
     }
@@ -72,7 +72,7 @@ class MessageController extends Controller
         $request->validate([
             'recipient_name'     => 'required|string|max:255',
             'recipient_email'    => 'required|email',
-            'delivery_schedule'  => 'required|string',
+            'delivery_schedule'  => 'required|date',
             'message'            => 'required|string',
         ]);
 

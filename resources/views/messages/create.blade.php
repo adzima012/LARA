@@ -1,47 +1,96 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto py-12 px-6">
-    <h1 class="text-3xl title-font font-bold mb-6 text-accent">Create New Message</h1>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display&display=swap');
 
-    <form action="{{ route('messages.store') }}" method="POST" class="space-y-6">
-        @csrf
+    .wasiat-bg {
+        background: url('https://www.transparenttextures.com/patterns/old-moon.png'), #fdf6e3;
+        font-family: 'Cinzel', serif;
+        padding: 2rem;
+        border-radius: 1rem;
+        border: 2px solid #d6c7a1;
+        box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    }
 
-        <div>
-            <label class="block text-secondary mb-2" for="recipient_name">Recipient's Name</label>
-            <input type="text" name="recipient_name" id="recipient_name" required class="w-full bg-primary border border-accent/30 rounded-lg px-4 py-3 text-secondary focus:outline-none">
-        </div>
+    .wasiat-label {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #3a3226;
+    }
 
-        <div>
-            <label class="block text-secondary mb-2" for="recipient_email">Recipient's Email</label>
-            <input type="email" name="recipient_email" id="recipient_email" required class="w-full bg-primary border border-accent/30 rounded-lg px-4 py-3 text-secondary focus:outline-none">
-        </div>
+    .wasiat-input,
+    .wasiat-textarea,
+    .wasiat-select {
+        background-color: rgba(255,255,255,0.8);
+        color: #3a3226;
+        border: 1px solid #bfae8e;
+        border-radius: 0.375rem;
+        padding: 0.5rem 1rem;
+        width: 100%;
+    }
 
-        <div>
-            <label class="block text-secondary mb-2" for="delivery_schedule">Delivery Schedule</label>
-            <select name="delivery_schedule" id="delivery_schedule" required class="w-full bg-primary border border-accent/30 rounded-lg px-4 py-3 text-secondary focus:outline-none">
-                <option value="birthday">Every year on their birthday</option>
-                <option value="anniversary">Every year on your anniversary</option>
-                <option value="specific">Specific date</option>
-                <option value="immediate">Immediately after verification</option>
-            </select>
-        </div>
+    .submit-btn {
+        background-color: #8b6a4a;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 0.375rem;
+        padding: 0.75rem 1.5rem;
+        margin-top: 1rem;
+        transition: background 0.3s ease;
+    }
 
-        <div>
-            <label class="block text-secondary mb-2" for="message">Message</label>
-            <textarea name="message" id="message" rows="6" required class="w-full bg-primary border border-accent/30 rounded-lg px-4 py-3 text-secondary focus:outline-none"></textarea>
-        </div>
+    .submit-btn:hover {
+        background-color: #a48261;
+    }
 
-        <div class="flex items-center">
-            <input type="checkbox" name="repeat_yearly" id="repeat_yearly" class="w-4 h-4 text-accent bg-primary border-accent rounded">
-            <label for="repeat_yearly" class="ml-2 text-sm text-secondary">Deliver this message every year</label>
-        </div>
+    .page-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #5e473a;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+</style>
 
-        <div>
-            <button type="submit" class="bg-accent hover:bg-accent/90 text-primary font-medium px-6 py-3 rounded-full transition duration-300">
-                Save Message
-            </button>
-        </div>
-    </form>
+<div class="max-w-3xl mx-auto mt-10 fade-in">
+    <div class="wasiat-bg">
+        <h1 class="page-title">Tulis Surat Wasiat Anda</h1>
+        <form method="POST" action="{{ route('messages.store') }}">
+            @csrf
+
+            <div class="mb-4">
+                <label class="wasiat-label" for="recipient_name">Nama Penerima</label>
+                <input type="text" id="recipient_name" name="recipient_name" class="wasiat-input" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="wasiat-label" for="recipient_email">Email Penerima</label>
+                <input type="email" id="recipient_email" name="recipient_email" class="wasiat-input" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="wasiat-label" for="delivery_schedule">Jadwal Pengiriman</label>
+                <select id="delivery_schedule" name="delivery_schedule" class="wasiat-select" required>
+                    <option value="upon-death">Setelah saya meninggal dunia</option>
+                    <option value="birthday">Saat ulang tahun penerima</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="wasiat-label" for="message">Isi Pesan Wasiat</label>
+                <textarea id="message" name="message" rows="6" class="wasiat-textarea" required></textarea>
+            </div>
+
+            <div class="mb-4 flex items-center space-x-2">
+                <input type="checkbox" id="repeat_yearly" name="repeat_yearly" class="accent-[#8b6a4a]">
+                <label for="repeat_yearly" class="wasiat-label text-sm font-normal">Kirim ulang setiap tahun</label>
+            </div>
+
+            <button type="submit" class="submit-btn">Kirim Wasiat</button>
+        </form>
+    </div>
 </div>
 @endsection

@@ -14,13 +14,7 @@
 
     <!-- Search and Create Button Section -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <a href="{{ route('messages.create') }}" class="order-2 sm:order-1 inline-flex items-center bg-accent text-primary font-medium px-6 py-2 rounded-full hover:bg-accent/90 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-            </svg>
-            Create New Message
-        </a>
-
+        
         <form action="{{ route('dashboard') }}" method="GET" class="order-1 sm:order-2 w-full sm:w-96">
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

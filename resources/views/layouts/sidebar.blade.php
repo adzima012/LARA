@@ -10,6 +10,9 @@
     <!-- Navigation -->
     <nav class="flex-1 overflow-y-auto py-4">
         <ul class="space-y-1 px-2">
+
+            {{-- Tampilkan hanya jika user login --}}
+            @auth
             <!-- Dashboard -->
             <li>
                 <a href="{{ route('dashboard') }}" 
@@ -19,7 +22,7 @@
                     <span class="ml-3">Dashboard</span>
                 </a>
             </li>
-            
+
             <!-- Create Message -->
             <li>
                 <a href="{{ route('messages') }}" 
@@ -29,9 +32,8 @@
                     <span class="ml-3">Create Message</span>
                 </a>
             </li>
-            
-            <!-- My Messages (only for authenticated users) -->
-            @auth
+
+            <!-- My Messages -->
             <li>
                 <a href="{{ route('messages.index') }}" 
                    class="flex items-center p-3 text-secondary hover:bg-accent/10 rounded-lg transition
@@ -40,10 +42,8 @@
                     <span class="ml-3">My Messages</span>
                 </a>
             </li>
-            @endauth
-            
+
             <!-- Profile -->
-            @auth
             <li>
                 <a href="{{ route('profile.edit') }}" 
                    class="flex items-center p-3 text-secondary hover:bg-accent/10 rounded-lg transition
@@ -53,6 +53,7 @@
                 </a>
             </li>
             @endauth
+
         </ul>
     </nav>
 
@@ -74,10 +75,3 @@
         @endauth
     </div>
 </aside>
-
-<!-- Mobile menu button -->
-<div class="md:hidden fixed bottom-4 right-4 z-50">
-    <button @click="sidebarOpen = !sidebarOpen" class="p-3 bg-accent rounded-full shadow-lg">
-        <i class="fas fa-bars text-white"></i>
-    </button>
-</div>

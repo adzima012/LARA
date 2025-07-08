@@ -29,107 +29,60 @@
             color: #ECE6F6;
         }
 
-        .title-font {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .sidebar {
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-collapsed {
-            width: 80px;
-        }
-
-        .sidebar-expanded {
-            width: 260px;
-        }
-
-        .main-content {
-            transition: margin-left 0.3s ease;
-        }
-
-        .message-box {
-            min-height: 200px;
-            resize: none;
-        }
-
+        .title-font { font-family: 'Playfair Display', serif; }
+        .sidebar { transition: all 0.3s ease; }
+        .sidebar-collapsed { width: 80px; }
+        .sidebar-expanded { width: 260px; }
+        .main-content { transition: margin-left 0.3s ease; }
         .gradient-border {
             position: relative;
             border-radius: 0.5rem;
         }
-
         .gradient-border::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
             background: linear-gradient(45deg, #8576A2, #ECE6F6, #8576A2);
             z-index: -1;
             border-radius: 0.6rem;
             opacity: 0.7;
         }
-
         .fade-in {
             animation: fadeIn 0.8s ease-in-out;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .floating {
             animation: floating 6s ease-in-out infinite;
         }
-
         @keyframes floating {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
-
-        .nav-item {
-            position: relative;
-            overflow: hidden;
-        }
-
+        .nav-item { position: relative; overflow: hidden; }
         .nav-item::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
+            bottom: 0; left: 0;
             width: 0;
             height: 2px;
             background: linear-gradient(90deg, #8576A2, #ECE6F6);
             transition: width 0.3s ease;
         }
+        .nav-item:hover::after, .active-nav::after { width: 100%; }
 
-        .nav-item:hover::after {
-            width: 100%;
-        }
-
-        .active-nav::after {
-            width: 100%;
-        }
-
-        /* Mobile sidebar transitions */
-        .sidebar-mobile {
-            transform: translateX(-100%);
-        }
-        .sidebar-mobile.open {
-            transform: translateX(0);
-        }
-        .sidebar-transition {
-            transition: transform 0.3s ease;
-        }
+        .sidebar-mobile { transform: translateX(-100%); }
+        .sidebar-mobile.open { transform: translateX(0); }
+        .sidebar-transition { transition: transform 0.3s ease; }
     </style>
     @stack('styles')
 </head>
 <body class="min-h-screen bg-primary" x-data="{ sidebarOpen: window.innerWidth > 768, sidebarCollapsed: false }">
     <div class="flex h-screen overflow-hidden">
+        @auth
         <!-- Sidebar -->
         <aside 
             class="sidebar bg-primary border-r border-accent/20 flex flex-col z-40 fixed h-full"
@@ -142,7 +95,6 @@
             x-show="sidebarOpen || window.innerWidth > 768"
             @click.away="if (window.innerWidth <= 768) sidebarOpen = false"
         >
-            <!-- Logo -->
             <div class="p-4 border-b border-accent/20 flex items-center justify-between">
                 <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
                     <i class="fas fa-scroll text-accent text-2xl"></i>
@@ -156,55 +108,39 @@
             <!-- Navigation -->
             <nav class="flex-1 overflow-y-auto py-4">
                 <ul class="space-y-1 px-2">
-                    <!-- Dashboard -->
                     <li>
-                        <a href="{{ route('dashboard') }}" 
-                           class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
+                        <a href="{{ route('dashboard') }}" class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
                            :class="request()->routeIs('dashboard') ? 'active-nav text-accent' : ''">
                             <i class="fas fa-home text-lg w-6 text-center"></i>
                             <span x-show="!sidebarCollapsed" class="ml-3">Dashboard</span>
                         </a>
                     </li>
-                    
-                    <!-- Messages -->
                     <li>
-                        <a href="{{ route('messages') }}" 
-                           class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
+                        <a href="{{ route('messages') }}" class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
                            :class="request()->routeIs('messages') ? 'active-nav text-accent' : ''">
                             <i class="fas fa-plus-circle text-lg w-6 text-center"></i>
                             <span x-show="!sidebarCollapsed" class="ml-3">Create Message</span>
                         </a>
                     </li>
-                    
-                    <!-- My Messages (only for authenticated users) -->
-                    @auth
                     <li>
-                        <a href="{{ route('dashboard') }}" 
-                           class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
+                        <a href="{{ route('dashboard') }}" class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
                            :class="request()->routeIs('dashboard') ? 'active-nav text-accent' : ''">
                             <i class="fas fa-envelope text-lg w-6 text-center"></i>
                             <span x-show="!sidebarCollapsed" class="ml-3">My Messages</span>
                         </a>
                     </li>
-                    @endauth
-                    
-                    <!-- Profile -->
-                    @auth
                     <li>
-                        <a href="{{ route('profile.edit') }}" 
-                           class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
+                        <a href="{{ route('profile.edit') }}" class="nav-item flex items-center p-3 text-secondary hover:text-accent transition"
                            :class="request()->routeIs('profile.edit') ? 'active-nav text-accent' : ''">
                             <i class="fas fa-user text-lg w-6 text-center"></i>
                             <span x-show="!sidebarCollapsed" class="ml-3">Profile</span>
                         </a>
                     </li>
-                    @endauth
                 </ul>
             </nav>
 
-            <!-- Bottom Section -->
+            <!-- Bottom -->
             <div class="p-4 border-t border-accent/20">
-                @auth
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full flex items-center p-2 text-secondary hover:text-accent transition">
@@ -212,14 +148,9 @@
                         <span x-show="!sidebarCollapsed" class="ml-3">Logout</span>
                     </button>
                 </form>
-                @else
-                <a href="{{ route('login') }}" class="flex items-center p-2 text-secondary hover:text-accent transition">
-                    <i class="fas fa-sign-in-alt text-lg w-6 text-center"></i>
-                    <span x-show="!sidebarCollapsed" class="ml-3">Login</span>
-                </a>
-                @endauth
             </div>
         </aside>
+        @endauth
 
         <!-- Main Content -->
         <div class="main-content flex-1 flex flex-col overflow-hidden"
@@ -231,9 +162,11 @@
             <!-- Mobile Header -->
             <header class="bg-primary border-b border-accent/20 md:hidden">
                 <div class="flex items-center justify-between p-4">
+                    @auth
                     <button @click="sidebarOpen = !sidebarOpen" class="text-secondary hover:text-accent">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
+                    @endauth
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-scroll text-accent text-xl"></i>
                         <span class="title-font text-lg text-secondary">LARA</span>
@@ -242,54 +175,24 @@
             </header>
 
             <!-- Content -->
-            <main class="flex-1 overflow-y-auto p-6">
+            <main class="flex-1 overflow-y-auto w-full p-0">
                 @yield('content')
             </main>
         </div>
     </div>
 
     <script>
-        // FAQ toggle
-        document.querySelectorAll('.faq-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const content = button.nextElementSibling;
-                const icon = button.querySelector('i');
-                content.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
-            });
-        });
-
-        // Form submission
-        document.getElementById('messageForm')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Your message has been securely saved. You can edit it anytime before delivery.');
-            this.reset();
-        });
-
-        // Fade in effect
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('fade-in');
                 }
             });
-        }, {threshold: 0.1});
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
-
-        // Handle window resize
-        function handleResize() {
-            const isDesktop = window.innerWidth > 768;
-            Alpine.store('sidebarOpen', isDesktop);
-            if (isDesktop) {
-                Alpine.store('sidebarCollapsed', false);
-            }
-        }
-
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initialize
     </script>
 
     @stack('scripts')

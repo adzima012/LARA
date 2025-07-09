@@ -3,21 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LARA extends Model
 {
-    use HasFactory;
-    protected $table = 'laras';
+    protected $fillable = [
+        'title',
+        'content',
+        'file_path',
+        'pemilik_id',
+        'penerima_id',
+        'is_released',
+    ];
 
-    protected $guarded = ['id'];
+    protected $casts = [
+        'is_released' => 'boolean',
+    ];
 
-    public function owner()
+    public function pemilik()
     {
         return $this->belongsTo(User::class, 'pemilik_id');
     }
 
-    public function recipient()
+    public function penerima()
     {
         return $this->belongsTo(User::class, 'penerima_id');
     }

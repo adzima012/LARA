@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto py-12 px-6">
-    <h1 class="text-3xl title-font font-bold mb-6 text-accent">Your Messages</h1>
+    <h1 class="text-3xl title-font font-bold mb-6 text-accent">Your Digital Wills</h1>
 
     <p class="mb-6 text-secondary/50">Login as user ID: {{ auth()->id() }}</p>
 
@@ -26,7 +26,7 @@
                     type="text" 
                     name="search" 
                     class="block w-full pl-10 pr-12 py-2 border border-accent/20 rounded-full bg-primary text-secondary focus:outline-none focus:ring-2 focus:ring-accent/50" 
-                    placeholder="Search by name, email or message..." 
+                    placeholder="Search by title or content..." 
                     value="{{ request('search') }}"
                 >
                 @if(request('search'))
@@ -54,67 +54,12 @@
         </form>
     </div>
 
-    @if($messages->isEmpty())
-        <div class="text-center py-12">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-secondary/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <p class="text-secondary/70 text-lg">You haven't created any messages yet.</p>
-            <p class="text-secondary/50 mt-2">Click "Create New Message" to get started</p>
-        </div>
-    @else
-        <div class="space-y-4">
-            @foreach($messages as $message)
-            <div class="p-4 border border-accent/20 rounded-lg bg-primary/80 hover:bg-primary/70 transition">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h2 class="text-lg font-semibold text-secondary mb-1">{{ $message->recipient_name }}</h2>
-                        <p class="text-secondary/80 text-sm mb-2">{{ Str::limit($message->message, 100) }}</p>
-                    </div>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent">
-                        {{ $message->recipient_email }}
-                    </span>
-                </div>
-                <div class="flex justify-between items-center mt-2 text-sm">
-                    <div class="flex items-center text-secondary/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span>
-                            Delivery: 
-                            @if($message->delivery_schedule && strtotime($message->delivery_schedule))
-                                {{ \Carbon\Carbon::parse($message->delivery_schedule)->format('M d, Y') }}
-                            @else
-                                <span class="text-red-500 italic">Invalid date</span>
-                            @endif
-                        </span>
-                    </div>
-                    <div class="space-x-3">
-                        <a href="{{ route('messages.edit', $message->id) }}" class="text-accent hover:text-accent/80 hover:underline flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            Edit
-                        </a>
-                        <form action="{{ route('messages.destroy', $message->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this message?')" class="text-red-500 hover:text-red-400 hover:underline flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                                Delete
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-
-        <div class="mt-8">
-            {{ $messages->links() }}
-        </div>
-    @endif
+    <div class="text-center py-12">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-secondary/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <p class="text-secondary/70 text-lg">You haven't created any digital wills yet.</p>
+        <p class="text-secondary/50 mt-2">Create your first digital will to get started</p>
+    </div>
 </div>
 @endsection

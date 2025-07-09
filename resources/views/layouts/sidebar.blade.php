@@ -23,23 +23,23 @@
                 </a>
             </li>
 
-            <!-- Create Message -->
+            <!-- Create Digital Will -->
             <li>
-                <a href="{{ route('messages') }}" 
+                <a href="{{ route('dashboard') }}" 
                    class="flex items-center p-3 text-secondary hover:bg-accent/10 rounded-lg transition
-                          {{ request()->routeIs('messages') ? 'bg-accent/20 text-accent' : '' }}">
+                          {{ request()->routeIs('dashboard') ? 'bg-accent/20 text-accent' : '' }}">
                     <i class="fas fa-plus-circle text-lg w-6 text-center"></i>
-                    <span class="ml-3">Create Message</span>
+                    <span class="ml-3">Create Digital Will</span>
                 </a>
             </li>
 
-            <!-- My Messages -->
+            <!-- My Digital Wills -->
             <li>
-                <a href="{{ route('messages.index') }}" 
+                <a href="{{ route('dashboard') }}" 
                    class="flex items-center p-3 text-secondary hover:bg-accent/10 rounded-lg transition
-                          {{ request()->routeIs('messages.index') ? 'bg-accent/20 text-accent' : '' }}">
-                    <i class="fas fa-envelope text-lg w-6 text-center"></i>
-                    <span class="ml-3">My Messages</span>
+                          {{ request()->routeIs('dashboard') ? 'bg-accent/20 text-accent' : '' }}">
+                    <i class="fas fa-scroll text-lg w-6 text-center"></i>
+                    <span class="ml-3">My Digital Wills</span>
                 </a>
             </li>
 

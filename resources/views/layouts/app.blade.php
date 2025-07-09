@@ -80,8 +80,8 @@
         <!-- Navigation -->
         <nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
             <x-nav-item icon="fas fa-home" label="Dashboard" route="dashboard" />
-            <x-nav-item icon="fas fa-plus-circle" label="Create Digital Will" route="dashboard" />
-            <x-nav-item icon="fas fa-scroll" label="My Digital Wills" route="dashboard" />
+            <x-nav-item icon="fas fa-plus-circle" label="Create Digital Will" route="laras.create" />
+            <x-nav-item icon="fas fa-scroll" label="My Digital Wills" route="laras.index" />
             <x-nav-item icon="fas fa-user" label="Profile" route="profile.edit" />
         </nav>
 

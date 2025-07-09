@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class LARA extends Model
 {
+    protected $table = 'laras';
+
     protected $fillable = [
         'title',
         'content',

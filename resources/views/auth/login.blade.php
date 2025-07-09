@@ -16,19 +16,35 @@
             </div>
         @endif
 
+        @if($errors->any())
+            <div class="bg-red-500/10 border border-red-500 text-red-300 text-sm p-3 rounded">
+                <ul class="list-disc list-inside space-y-1">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('login') }}" class="space-y-5">
             @csrf
 
             <div>
                 <label for="email" class="block text-sm text-white/80 mb-1">Email address</label>
-                <input id="email" type="email" name="email" required autofocus
-                    class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa]">
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                    class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa] @error('email') border-red-500 @enderror">
+                @error('email')
+                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <label for="password" class="block text-sm text-white/80 mb-1">Password</label>
                 <input id="password" type="password" name="password" required
-                    class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa]">
+                    class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa] @error('password') border-red-500 @enderror">
+                @error('password')
+                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="flex items-center justify-between text-sm text-white/60">
@@ -44,7 +60,7 @@
         </form>
 
         <p class="text-center text-sm text-white/50 mt-6">
-            Don’t have an account?
+            Don't have an account?
             <a href="{{ route('register') }}" class="text-[#a78bfa] hover:underline">Create one</a>
         </p>
     </div>

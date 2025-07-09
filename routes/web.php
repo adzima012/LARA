@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LARAController;
 
 // Halaman utama
 Route::get('/', function () {
@@ -15,6 +16,9 @@ Route::get('/dashboard', function () {
 
 // Grup rute yang hanya bisa diakses oleh user yang login
 Route::middleware(['auth'])->group(function () {
+    // LARA Resource Routes
+    Route::resource('laras', LARAController::class);
+    
     // Rute profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

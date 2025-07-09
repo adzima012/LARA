@@ -35,6 +35,11 @@
                 <label for="password_confirmation" class="block text-sm text-white/80 mb-1">Confirm Password</label>
                 <input id="password_confirmation" type="password" name="password_confirmation" required
                     class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa]">
+                @if ($errors->has('password'))
+                    <span class="text-red-500 text-xs mt-1 block">
+                        {{ $errors->first('password') }}
+                    </span>
+                @endif
             </div>
 
             <button type="submit"

@@ -16,9 +16,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#121212',
-                        secondary: '#ECE6F6',
-                        accent: '#8576A2',
+                        background: '#1A1A1D',
+                        surface: '#29292D',
+                        text: '#F2F2F2',
+                        primary: '#BDA7F3',
+                        primaryHover: '#D0BBF9',
+                        accent: '#E8C9D1',
                     }
                 }
             }
@@ -30,8 +33,8 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
-            color: #ECE6F6;
+            background-color: #1A1A1D;
+            color: #F2F2F2;
         }
 
         .title-font { font-family: 'Playfair Display', serif; }
@@ -45,7 +48,7 @@
             bottom: 0; left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #8576A2, #ECE6F6);
+            background: linear-gradient(90deg, #BDA7F3, #E8C9D1);
             transition: width 0.3s ease;
         }
         .nav-item:hover::after, .active-nav::after { width: 100%; }
@@ -59,7 +62,6 @@
         @include('components.navbar')
         @include('components.hero')
         @include('components.features')
-        @include('components.create-message')
         @include('components.testimonials')
         @include('components.faq')
         @include('components.cta')

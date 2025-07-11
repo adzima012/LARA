@@ -14,9 +14,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#121212',
-                        secondary: '#ECE6F6',
-                        accent: '#8576A2',
+                        background: '#1A1A1D',
+                        surface: '#29292D',
+                        text: '#F2F2F2',
+                        primary: '#BDA7F3',
+                        primaryHover: '#D0BBF9',
+                        accent: '#E8C9D1',
                     }
                 }
             }
@@ -28,8 +31,8 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
-            color: #ECE6F6;
+            background-color: #1A1A1D;
+            color: #F2F2F2;
         }
 
         .title-font { font-family: 'Playfair Display', serif; }
@@ -43,7 +46,7 @@
             bottom: 0; left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #8576A2, #ECE6F6);
+            background: linear-gradient(90deg, #BDA7F3, #E8C9D1);
             transition: width 0.3s ease;
         }
         .nav-item:hover::after, .active-nav::after { width: 100%; }
@@ -53,11 +56,11 @@
     </style>
     @stack('styles')
 </head>
-<body x-data="{ sidebarOpen: window.innerWidth > 768, sidebarCollapsed: false }" class="min-h-screen bg-primary">
+<body x-data="{ sidebarOpen: window.innerWidth > 768, sidebarCollapsed: false }" class="min-h-screen bg-background">
 <div class="flex h-screen overflow-hidden">
     @auth
     <!-- Sidebar -->
-    <aside class="sidebar bg-gradient-to-b from-[#1f1f1f] to-[#2e2e2e] text-secondary border-r border-accent/20 flex flex-col z-40 fixed h-full shadow-xl backdrop-blur-md"
+    <aside class="sidebar bg-gradient-to-b from-surface to-background text-text border-r border-accent/20 flex flex-col z-40 fixed h-full shadow-xl backdrop-blur-md"
            :class="{
                'sidebar-collapsed': sidebarCollapsed,
                'sidebar-expanded': !sidebarCollapsed,
@@ -70,19 +73,19 @@
         <div class="p-4 border-b border-accent/20 flex items-center justify-between">
             <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
                 <i class="fas fa-scroll text-accent text-2xl"></i>
-                <span class="title-font text-xl text-secondary tracking-wide">LARA</span>
+                <span class="title-font text-xl text-text tracking-wide">LARA</span>
             </div>
-            <button @click="sidebarCollapsed = !sidebarCollapsed" class="text-secondary/70 hover:text-accent">
+            <button @click="sidebarCollapsed = !sidebarCollapsed" class="text-text/70 hover:text-accent">
                 <i :class="sidebarCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left'"></i>
             </button>
         </div>
 
         <!-- Navigation -->
         <nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
-            <x-nav-item icon="fas fa-home" label="Dashboard" route="dashboard" />
-            <x-nav-item icon="fas fa-plus-circle" label="Create Digital Will" route="laras.create" />
-            <x-nav-item icon="fas fa-scroll" label="My Digital Wills" route="laras.index" />
-            <x-nav-item icon="fas fa-user" label="Profile" route="profile.edit" />
+            <x-nav-item icon="fas fa-home" label="Beranda" route="dashboard" />
+            <x-nav-item icon="fas fa-plus-circle" label="Buat Wasiat Digital" route="laras.create" />
+            <x-nav-item icon="fas fa-scroll" label="Wasiat Digital Saya" route="laras.index" />
+            <x-nav-item icon="fas fa-user" label="Profil" route="profile.edit" />
         </nav>
 
         <!-- Quote -->
@@ -94,9 +97,9 @@
         <div class="p-4 border-t border-accent/20">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="w-full flex items-center p-2 text-secondary hover:text-accent transition">
+                <button type="submit" class="w-full flex items-center p-2 text-text hover:text-accent transition">
                     <i class="fas fa-sign-out-alt text-lg w-6 text-center"></i>
-                    <span x-show="!sidebarCollapsed" class="ml-3">Logout</span>
+                    <span x-show="!sidebarCollapsed" class="ml-3">Keluar</span>
                 </button>
             </form>
         </div>
@@ -111,16 +114,16 @@
             'md:ml-64': sidebarOpen && !sidebarCollapsed && @json(auth()->check())
          }">
         <!-- Mobile Header -->
-        <header class="bg-primary border-b border-accent/20 md:hidden">
+        <header class="bg-surface border-b border-accent/20 md:hidden">
             <div class="flex items-center justify-between p-4">
                 @auth
-                <button @click="sidebarOpen = !sidebarOpen" class="text-secondary hover:text-accent">
+                <button @click="sidebarOpen = !sidebarOpen" class="text-text hover:text-accent">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
                 @endauth
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-scroll text-accent text-xl"></i>
-                    <span class="title-font text-lg text-secondary">LARA</span>
+                    <span class="title-font text-lg text-text">LARA</span>
                 </div>
             </div>
         </header>

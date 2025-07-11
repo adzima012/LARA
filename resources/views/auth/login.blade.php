@@ -1,13 +1,13 @@
 <!-- resources/views/auth/login.blade.php -->
 
-@extends('layouts.app') <!-- Pastikan layout utama juga sudah dark theme -->
+@extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-[#12101a] px-4 py-12">
-    <div class="bg-[#1d1b24] border border-[#a78bfa33] shadow-xl rounded-2xl w-full max-w-md p-8 space-y-6">
+<div class="min-h-screen flex items-center justify-center bg-background px-4 py-12">
+    <div class="bg-surface border border-accent/20 shadow-xl rounded-2xl w-full max-w-md p-8 space-y-6">
         <div class="text-center">
-            <h2 class="text-2xl font-semibold text-white">Welcome Back</h2>
-            <p class="mt-1 text-sm text-white/60">Enter your credentials to access your memories</p>
+            <h2 class="text-2xl font-semibold text-text">Selamat Datang Kembali</h2>
+            <p class="mt-1 text-sm text-text/60">Masukkan kredensial Anda untuk mengakses kenangan Anda</p>
         </div>
 
         @if(session('error'))
@@ -30,38 +30,37 @@
             @csrf
 
             <div>
-                <label for="email" class="block text-sm text-white/80 mb-1">Email address</label>
+                <label for="email" class="block text-sm text-text/80 mb-1">Alamat Email</label>
                 <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                    class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa] @error('email') border-red-500 @enderror">
+                    class="w-full px-4 py-2 rounded bg-background text-text placeholder-text/30 border border-accent/30 focus:outline-none focus:ring-2 focus:ring-accent @error('email') border-red-500 @enderror">
                 @error('email')
                     <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <div>
-                <label for="password" class="block text-sm text-white/80 mb-1">Password</label>
+                <label for="password" class="block text-sm text-text/80 mb-1">Kata Sandi</label>
                 <input id="password" type="password" name="password" required
-                    class="w-full px-4 py-2 rounded bg-[#2b2937] text-white placeholder-white/30 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#a78bfa] @error('password') border-red-500 @enderror">
+                    class="w-full px-4 py-2 rounded bg-background text-text placeholder-text/30 border border-accent/30 focus:outline-none focus:ring-2 focus:ring-accent @error('password') border-red-500 @enderror">
                 @error('password')
                     <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="flex items-center justify-between text-sm text-white/60">
+            <div class="flex items-center text-sm text-text/60">
                 <label class="flex items-center gap-2">
-                    <input type="checkbox" name="remember" class="accent-[#a78bfa]">
-                    Remember me
+                    <input type="checkbox" name="remember" class="accent-primary">
+                    Ingat saya
                 </label>
-                <a href="{{ route('password.request') }}" class="hover:underline text-[#a78bfa]">Forgot?</a>
             </div>
 
             <button type="submit"
-                class="w-full py-2 rounded bg-[#a78bfa] hover:bg-[#9274ec] transition text-white font-semibold">Sign In</button>
+                class="w-full py-2 rounded bg-primary hover:bg-primaryHover transition text-black font-semibold">Masuk</button>
         </form>
 
-        <p class="text-center text-sm text-white/50 mt-6">
-            Don't have an account?
-            <a href="{{ route('register') }}" class="text-[#a78bfa] hover:underline">Create one</a>
+        <p class="text-center text-sm text-text/50 mt-6">
+            Belum punya akun?
+            <a href="{{ route('register') }}" class="text-accent hover:underline">Buat satu</a>
         </p>
     </div>
 </div>

@@ -18,7 +18,7 @@
                             <p class="text-gray-300 font-medium">Kelola informasi akun dan keamanan Anda</p>
                         </div>
                         <div class="text-right">
-                            <div class="text-xs text-gray-400 font-mono">User ID: {{ auth()->id() }}</div>
+                            <div class="text-xs text-gray-400 font-medium">{{ auth()->user()->name }}</div>
                             <div class="text-xs text-gray-500">{{ now()->format('d M Y, H:i') }}</div>
                         </div>
                     </div>

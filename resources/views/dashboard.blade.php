@@ -13,11 +13,11 @@
                     <div>
                         <h1 class="text-3xl font-serif font-bold text-white mb-2">Dashboard Surat Digital</h1>
                         <p class="text-gray-300 font-medium">Kelola dan temukan surat digital Anda</p>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-xs text-gray-400 font-mono">User ID: {{ auth()->id() }}</div>
-                        <div class="text-xs text-gray-500">{{ now()->format('d M Y, H:i') }}</div>
-                    </div>
+                    </div>                        
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 font-medium">{{ auth()->user()->name }}</div>
+                            <div class="text-xs text-gray-500">{{ now()->format('d M Y, H:i') }}</div>
+                        </div>
                 </div>
             </div>
 
@@ -118,11 +118,12 @@
                             </h2>
                             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                                 @foreach($receivedLetters as $letter)
-                                    <div class="bg-gray-700/50 border-2 border-gray-600 rounded-lg p-6 hover:border-pink-500/50 hover:bg-gray-700/70 transition-all duration-300 group relative overflow-hidden">
-                                        <div class="relative z-10">
-                                            <div class="flex justify-between items-start mb-4">
-                                                <h3 class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300">{{ $letter->title }}</h3>
-                                            </div>
+                                    <a href="{{ route('laras.show', $letter) }}" class="block">
+                                        <div class="bg-gray-700/50 border-2 border-gray-600 rounded-lg p-6 hover:border-pink-500/50 hover:bg-gray-700/70 transition-all duration-300 group relative overflow-hidden">
+                                            <div class="relative z-10">
+                                                <div class="flex justify-between items-start mb-4">
+                                                    <h3 class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300">{{ $letter->title }}</h3>
+                                                </div>
                                             
                                             <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
                                                 <p class="text-gray-300 text-sm leading-relaxed line-clamp-3 font-serif">

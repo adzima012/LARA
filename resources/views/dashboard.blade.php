@@ -121,7 +121,7 @@
                                     <div class="bg-gray-700/50 border-2 border-gray-600 rounded-lg p-6 hover:border-pink-500/50 hover:bg-gray-700/70 transition-all duration-300 group relative overflow-hidden">
                                         <div class="relative z-10">
                                             <div class="flex justify-between items-start mb-4">
-                                                <a href="{{ route('laras.show', $letter) }}" class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300 hover:text-pink-400">{{ $letter->title }}</a>
+                                                <h3 class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300">{{ $letter->title }}</h3>
                                             </div>
                                             
                                             <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
@@ -163,10 +163,6 @@
                                         <div class="relative z-10">
                                             <div class="flex justify-between items-start mb-4">
                                                 <h3 class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300">{{ $letter->title }}</h3>
-                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $letter->is_released ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-pink-500/20 text-pink-300 border border-pink-500/30' }}">
-                                                    <i class="fas {{ $letter->is_released ? 'fa-unlock' : 'fa-lock' }} mr-1"></i>
-                                                    {{ $letter->is_released ? 'Dibuka' : 'Pribadi' }}
-                                                </span>
                                             </div>
                                             
                                             <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
@@ -180,17 +176,9 @@
                                                 <span>Untuk: {{ $letter->recipient_email }}</span>
                                             </div>
                                             
-                                            <div class="flex items-center justify-between">
-                                                <span class="text-xs text-gray-500">
-                                                    <i class="fas fa-calendar mr-1"></i>
-                                                    {{ $letter->created_at->format('d M Y') }}
-                                                </span>
-                                                <div class="flex space-x-2">
-                                                    <a href="{{ route('laras.edit', $letter) }}" 
-                                                       class="text-gray-400 hover:text-pink-400 text-sm transition-colors duration-300 p-2 hover:bg-pink-500/10 rounded-lg">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                </div>
+                                            <div class="flex items-center text-xs text-gray-500">
+                                                <i class="fas fa-calendar mr-2"></i>
+                                                <span>{{ $letter->created_at->format('d M Y') }}</span>
                                             </div>
                                         </div>
                                     </div>

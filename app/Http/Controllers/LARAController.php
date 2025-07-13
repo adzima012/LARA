@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\LARA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LARAController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the user's digital wills.
      */
@@ -36,16 +40,25 @@ class LARAController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'penerima_id' => 'required|exists:users,id',
+            'recipient_email' => 'required|email|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        LARA::create([
+        $data = [
             'title' => $request->title,
             'content' => $request->content,
             'pemilik_id' => Auth::id(),
-            'penerima_id' => $request->penerima_id,
+            'recipient_email' => $request->recipient_email,
             'is_released' => false,
-        ]);
+        ];
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('will-images', 'public');
+            $data['image_path'] = $imagePath;
+        }
+
+        LARA::create($data);
 
         return redirect()->route('laras.index')->with('success', 'Digital will created successfully.');
     }
@@ -55,8 +68,13 @@ class LARAController extends Controller
      */
     public function show(LARA $lara)
     {
-        $this->authorize('view', $lara);
-        return view('laras.show', compact('lara'));
+        // Allow viewing if user is the owner or the recipient (when released)
+        if ($lara->pemilik_id === Auth::id() || 
+            ($lara->recipient_email === Auth::user()->email && $lara->is_released)) {
+            return view('laras.show', compact('lara'));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
@@ -78,14 +96,35 @@ class LARAController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'penerima_id' => 'required|exists:users,id',
+            'recipient_email' => 'required|email|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $lara->update([
+        $data = [
             'title' => $request->title,
             'content' => $request->content,
-            'penerima_id' => $request->penerima_id,
-        ]);
+            'recipient_email' => $request->recipient_email,
+        ];
+
+        // Handle image removal
+        if ($request->has('remove_image') && $request->remove_image == '1') {
+            if ($lara->image_path) {
+                Storage::disk('public')->delete($lara->image_path);
+            }
+            $data['image_path'] = null;
+        }
+        // Handle new image upload
+        elseif ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($lara->image_path) {
+                Storage::disk('public')->delete($lara->image_path);
+            }
+            
+            $imagePath = $request->file('image')->store('will-images', 'public');
+            $data['image_path'] = $imagePath;
+        }
+
+        $lara->update($data);
 
         return redirect()->route('laras.index')->with('success', 'Digital will updated successfully.');
     }
@@ -97,8 +136,30 @@ class LARAController extends Controller
     {
         $this->authorize('delete', $lara);
 
+        // Delete the associated image if it exists
+        if ($lara->image_path) {
+            Storage::disk('public')->delete($lara->image_path);
+        }
+
         $lara->delete();
 
-        return redirect()->route('laras.index')->with('success', 'Digital will deleted successfully.');
+        return redirect()->route('laras.index')->with('success', 'Digital letter deleted successfully.');
+    }
+
+    /**
+     * Get the user's received letters and sent wills for the dashboard.
+     */
+    public function getDashboard()
+    {
+        $receivedLetters = LARA::where('recipient_email', Auth::user()->email)
+            ->where('is_released', true)
+            ->latest()
+            ->paginate(10);
+
+        $sentLetters = LARA::where('pemilik_id', Auth::id())
+            ->latest()
+            ->paginate(10);
+
+        return view('dashboard', compact('receivedLetters', 'sentLetters'));
     }
 }

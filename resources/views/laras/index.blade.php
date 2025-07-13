@@ -10,12 +10,12 @@
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pink-500/30 to-transparent"></div>
                 <div class="flex justify-between items-center">
                     <div>
-                        <h1 class="text-3xl font-serif font-bold text-white mb-2">Wasiat Digital Saya</h1>
-                        <p class="text-gray-300 font-medium">Kelola dan lihat wasiat digital Anda</p>
+                        <h1 class="text-3xl font-serif font-bold text-white mb-2">Surat Digital Saya</h1>
+                        <p class="text-gray-300 font-medium">Kelola dan lihat surat digital Anda</p>
                     </div>
                     <a href="{{ route('laras.create') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                         <i class="fas fa-feather mr-2"></i>
-                        Buat Wasiat Baru
+                        Buat Surat Baru
                     </a>
                 </div>
             </div>
@@ -36,11 +36,11 @@
                         <div class="w-32 h-32 bg-pink-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-pink-500/20">
                             <i class="fas fa-scroll text-pink-400 text-4xl"></i>
                         </div>
-                        <h3 class="text-2xl font-serif font-semibold text-white mb-3">Belum Ada Wasiat Digital</h3>
-                        <p class="text-gray-300 mb-8 max-w-md mx-auto">Anda belum membuat wasiat digital apapun. Mulailah dengan membuat wasiat pertama Anda untuk orang yang Anda kasihi.</p>
+                        <h3 class="text-2xl font-serif font-semibold text-white mb-3">Belum Ada Surat Digital</h3>
+                        <p class="text-gray-300 mb-8 max-w-md mx-auto">Anda belum membuat surat digital apapun. Mulailah dengan membuat surat pertama Anda untuk orang yang Anda kasihi.</p>
                         <a href="{{ route('laras.create') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             <i class="fas fa-feather mr-3"></i>
-                            Buat Wasiat Pertama Anda
+                            Buat Surat Pertama Anda
                         </a>
                     </div>
                 @else
@@ -52,43 +52,60 @@
                             
                             <div class="relative z-10">
                                 <div class="flex justify-between items-start mb-4">
-                                    <h3 class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300">{{ $lara->title }}</h3>
+                                    <a href="{{ route('laras.show', $lara) }}" class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300 hover:text-pink-400">{{ $lara->title }}</a>
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $lara->is_released ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-pink-500/20 text-pink-300 border border-pink-500/30' }}">
                                         <i class="fas {{ $lara->is_released ? 'fa-unlock' : 'fa-lock' }} mr-1"></i>
                                         {{ $lara->is_released ? 'Dibuka' : 'Pribadi' }}
                                     </span>
                                 </div>
                                 
-                                <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
-                                    <p class="text-gray-300 text-sm leading-relaxed line-clamp-3 font-serif">
-                                        {{ Str::limit($lara->content, 120) }}
-                                    </p>
-                                </div>
+                                @if($lara->image_path)
+                                    <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
+                                        <div class="flex items-center mb-2">
+                                            <i class="fas fa-image text-pink-400 mr-2 text-sm"></i>
+                                            <span class="text-xs text-gray-400">Gambar tersedia</span>
+                                        </div>
+                                        <img src="{{ asset('storage/' . $lara->image_path) }}" 
+                                             alt="Will thumbnail" 
+                                             class="w-full h-32 object-cover rounded-lg mb-3">
+                                        <p class="text-gray-300 text-sm leading-relaxed line-clamp-2 font-serif">
+                                            {{ Str::limit($lara->content, 80) }}
+                                        </p>
+                                    </div>
+                                @else
+                                    <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
+                                        <p class="text-gray-300 text-sm leading-relaxed line-clamp-3 font-serif">
+                                            {{ Str::limit($lara->content, 120) }}
+                                        </p>
+                                    </div>
+                                @endif
                                 
                                 <div class="flex items-center text-gray-400 text-sm mb-4 bg-gray-800/30 rounded-lg p-3">
                                     <i class="fas fa-heart text-pink-400 mr-2"></i>
-                                    <span>Untuk: {{ $lara->penerima->name }}</span>
+                                    <span>Untuk: {{ $lara->recipient_email }}</span>
                                 </div>
                                 
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-600">
-                                    <span class="text-gray-500 text-xs font-mono">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-gray-500">
                                         <i class="fas fa-calendar mr-1"></i>
                                         {{ $lara->created_at->format('d M Y') }}
                                     </span>
-                                    <div class="flex space-x-3">
+                                    <div class="flex space-x-2">
                                         <a href="{{ route('laras.edit', $lara) }}" 
                                            class="text-gray-400 hover:text-pink-400 text-sm transition-colors duration-300 p-2 hover:bg-pink-500/10 rounded-lg">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('laras.destroy', $lara) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus wasiat digital ini?')" 
-                                                    class="text-gray-400 hover:text-red-400 text-sm transition-colors duration-300 p-2 hover:bg-red-500/10 rounded-lg">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        @if(!$lara->is_released)
+                                            <form action="{{ route('laras.destroy', $lara) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" 
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus surat digital ini?')"
+                                                        class="text-gray-400 hover:text-red-400 text-sm transition-colors duration-300 p-2 hover:bg-red-500/10 rounded-lg">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -111,11 +128,11 @@
                 <div class="flex justify-between items-center text-xs text-gray-400">
                     <div class="flex items-center">
                         <i class="fas fa-shield-alt mr-2"></i>
-                        <span>Semua wasiat dilindungi dan terenkripsi</span>
+                        <span>Semua surat dilindungi dan terenkripsi</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-clock mr-2"></i>
-                        <span>Total: {{ $laras->count() }} wasiat</span>
+                        <span>Total: {{ $laras->count() }} surat</span>
                     </div>
                 </div>
             </div>
@@ -159,4 +176,4 @@
     overflow: hidden;
 }
 </style>
-@endsection 
+@endsection

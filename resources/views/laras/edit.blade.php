@@ -10,8 +10,8 @@
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pink-500/30 to-transparent"></div>
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-3xl font-serif font-bold text-white mb-2">Surat Digital</h1>
-                        <p class="text-gray-300 font-medium">Tulis pesan terakhir untuk orang yang Anda kasihi</p>
+                        <h1 class="text-3xl font-serif font-bold text-white mb-2">Edit Surat Digital</h1>
+                        <p class="text-gray-300 font-medium">Ubah pesan terakhir untuk orang yang Anda kasihi</p>
                     </div>
                     <div class="text-right">
                         <div class="text-xs text-gray-400 font-mono">{{ now()->format('d M Y, H:i') }}</div>
@@ -36,14 +36,15 @@
                     </div>
                 @endif
 
-                <form action="{{ route('laras.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+                <form action="{{ route('laras.update', $lara) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                     @csrf
+                    @method('PUT')
 
                     <!-- Title field with paper styling -->
                     <div class="relative">
                         <label for="title" class="block text-sm font-medium text-gray-300 mb-3">Judul Surat</label>
                         <div class="relative">
-                            <input type="text" name="title" id="title" value="{{ old('title') }}" required
+                            <input type="text" name="title" id="title" value="{{ old('title', $lara->title) }}" required
                                 class="w-full px-6 py-4 bg-gray-700/50 border-2 border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-500/50 focus:bg-gray-700/70 transition-all duration-300 font-serif text-lg @error('title') border-red-400/50 @enderror"
                                 placeholder="Tulis judul surat Anda...">
                             <div class="absolute inset-0 border border-gray-600 rounded-lg pointer-events-none"></div>
@@ -60,7 +61,7 @@
                     <div class="relative">
                         <label for="recipient_email" class="block text-sm font-medium text-gray-300 mb-3">Email Penerima Surat</label>
                         <div class="relative">
-                            <input type="email" name="recipient_email" id="recipient_email" value="{{ old('recipient_email') }}" required
+                            <input type="email" name="recipient_email" id="recipient_email" value="{{ old('recipient_email', $lara->recipient_email) }}" required
                                 class="w-full px-6 py-4 bg-gray-700/50 border-2 border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-500/50 focus:bg-gray-700/70 transition-all duration-300 font-serif text-lg @error('recipient_email') border-red-400/50 @enderror"
                                 placeholder="Masukkan email penerima surat...">
                             <div class="absolute inset-0 border border-gray-600 rounded-lg pointer-events-none"></div>
@@ -76,6 +77,20 @@
                     <!-- Image upload field -->
                     <div class="relative">
                         <label for="image" class="block text-sm font-medium text-gray-300 mb-3">Gambar Surat (Opsional)</label>
+                        
+                        @if($lara->image_path)
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-400 mb-2">Gambar saat ini:</p>
+                                <div class="relative inline-block">
+                                    <img src="{{ asset('storage/' . $lara->image_path) }}" alt="Current image" class="w-32 h-32 object-cover rounded-lg border-2 border-gray-600">
+                                    <div class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs cursor-pointer" onclick="removeCurrentImage()">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="remove_image" id="remove_image" value="0">
+                            </div>
+                        @endif
+                        
                         <div class="relative">
                             <div class="flex items-center justify-center w-full">
                                 <label for="image" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-700/50 hover:bg-gray-700/70 transition-all duration-300 group">
@@ -105,7 +120,7 @@
                         <div class="relative">
                             <textarea name="content" id="content" rows="15" required
                                 class="w-full px-6 py-4 bg-gray-700/50 border-2 border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-500/50 focus:bg-gray-700/70 transition-all duration-300 font-serif text-base leading-relaxed resize-none @error('content') border-red-400/50 @enderror"
-                                placeholder="Tulis pesan terakhir Anda di sini...&#10;&#10;Saya harap kata-kata ini dapat memberikan kenyamanan dan kejelasan...&#10;&#10;Dengan penuh cinta dan harapan...">{{ old('content') }}</textarea>
+                                placeholder="Tulis pesan terakhir Anda di sini...&#10;&#10;Saya harap kata-kata ini dapat memberikan kenyamanan dan kejelasan...&#10;&#10;Dengan penuh cinta dan harapan...">{{ old('content', $lara->content) }}</textarea>
                             <div class="absolute inset-0 border border-gray-600 rounded-lg pointer-events-none"></div>
                         </div>
                         @error('content')
@@ -116,28 +131,24 @@
                         @enderror
                     </div>
 
-                    <!-- Emotional warning box -->
+                    <!-- Status warning box -->
                     <div class="bg-pink-500/10 border-l-4 border-pink-500/50 rounded-r-lg p-6">
                         <div class="flex items-start">
                             <i class="fas fa-heart text-pink-400 mt-1 mr-4 text-lg"></i>
                             <div class="text-sm text-gray-300">
-                                <p class="font-semibold mb-3 text-white">Pesan Penting:</p>
+                                <p class="font-semibold mb-3 text-white">Status Surat:</p>
                                 <ul class="space-y-2 text-gray-300">
                                     <li class="flex items-start">
                                         <span class="text-pink-400 mr-2">•</span>
-                                        Surat Anda akan tetap rahasia hingga dibuka oleh admin
+                                        Status: <span class="font-semibold {{ $lara->is_released ? 'text-green-400' : 'text-yellow-400' }}">{{ $lara->is_released ? 'Dibuka' : 'Pribadi' }}</span>
                                     </li>
                                     <li class="flex items-start">
                                         <span class="text-pink-400 mr-2">•</span>
-                                        Hanya penerima yang ditentukan yang dapat melihat surat setelah dibuka
+                                        Dibuat pada: {{ $lara->created_at->format('d M Y, H:i') }}
                                     </li>
                                     <li class="flex items-start">
                                         <span class="text-pink-400 mr-2">•</span>
-                                        Anda dapat mengedit atau menghapus surat ini kapan saja sebelum dibuka
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span class="text-pink-400 mr-2">•</span>
-                                        Pastikan memilih penerima yang tepat
+                                        Terakhir diperbarui: {{ $lara->updated_at->format('d M Y, H:i') }}
                                     </li>
                                 </ul>
                             </div>
@@ -147,8 +158,8 @@
                     <!-- Action buttons with emotional styling -->
                     <div class="flex items-center gap-4 pt-6 border-t border-gray-700">
                         <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                            <i class="fas fa-feather mr-3"></i>
-                            Simpan Surat Digital
+                            <i class="fas fa-save mr-3"></i>
+                            Simpan Perubahan
                         </button>
                         <a href="{{ route('laras.index') }}" class="border-2 border-gray-600 text-gray-300 hover:bg-gray-700/50 hover:border-gray-500 font-medium px-8 py-4 rounded-lg transition-all duration-300">
                             Batal
@@ -166,7 +177,7 @@
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-clock mr-2"></i>
-                        <span>Dibuat pada {{ now()->format('d/m/Y H:i') }}</span>
+                        <span>Diperbarui pada {{ now()->format('d/m/Y H:i') }}</span>
                     </div>
                 </div>
             </div>
@@ -208,7 +219,18 @@ textarea::placeholder {
 </style>
 
 <script>
-// Image preview functionality
+function removeCurrentImage() {
+    if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
+        document.getElementById('remove_image').value = '1';
+        // Hide the current image preview
+        const imageContainer = document.querySelector('.relative.inline-block');
+        if (imageContainer) {
+            imageContainer.style.display = 'none';
+        }
+    }
+}
+
+// Image preview functionality for new uploads
 document.getElementById('image').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -217,11 +239,11 @@ document.getElementById('image').addEventListener('change', function(e) {
             const preview = document.createElement('img');
             preview.src = e.target.result;
             preview.className = 'w-32 h-32 object-cover rounded-lg border-2 border-gray-600 mt-2';
-            preview.alt = 'Image preview';
+            preview.alt = 'New image preview';
             
             const container = document.querySelector('label[for="image"]');
             const existingPreview = container.querySelector('img');
-            if (existingPreview) {
+            if (existingPreview && existingPreview.alt === 'New image preview') {
                 existingPreview.remove();
             }
             container.appendChild(preview);
@@ -230,4 +252,4 @@ document.getElementById('image').addEventListener('change', function(e) {
     }
 });
 </script>
-@endsection 
+@endsection

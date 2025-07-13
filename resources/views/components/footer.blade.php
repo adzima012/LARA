@@ -8,7 +8,7 @@
                     <span class="title-font text-xl text-text">LARA</span>
                 </div>
                 <p class="text-text/70 mb-4 max-w-md">
-                    Melestarikan pikiran dan wasiat digital Anda melampaui waktu, menyampaikan cinta ketika paling dibutuhkan.
+                    Melestarikan pikiran dan surat digital Anda melampaui waktu, menyampaikan cinta ketika paling dibutuhkan.
                 </p>
                 <div class="flex space-x-4">
                     <a href="#" class="text-text/50 hover:text-accent transition">

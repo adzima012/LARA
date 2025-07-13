@@ -83,8 +83,8 @@
         <!-- Navigation -->
         <nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
             <x-nav-item icon="fas fa-home" label="Beranda" route="dashboard" />
-            <x-nav-item icon="fas fa-plus-circle" label="Buat Wasiat Digital" route="laras.create" />
-            <x-nav-item icon="fas fa-scroll" label="Wasiat Digital Saya" route="laras.index" />
+                            <x-nav-item icon="fas fa-plus-circle" label="Buat Surat Digital" route="laras.create" />
+                <x-nav-item icon="fas fa-scroll" label="Surat Digital Saya" route="laras.index" />
             <x-nav-item icon="fas fa-user" label="Profil" route="profile.edit" />
         </nav>
 

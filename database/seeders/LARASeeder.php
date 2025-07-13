@@ -20,59 +20,59 @@ class LARASeeder extends Seeder
         // Create LARA records with different scenarios
         $laras = [
             [
-                'title' => 'Wasiat Keluarga',
+                'title' => 'Surat Keluarga',
                 'content' => 'Kepada keluarga tercinta, saya berharap kalian tetap bersatu dan saling mendukung satu sama lain. Jangan pernah lupa nilai-nilai yang telah kita tanamkan bersama.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => false,
             ],
             [
                 'title' => 'Pesan Terakhir untuk Anak-anak',
                 'content' => 'Anak-anakku yang tercinta, ayah/ibu sangat bangga dengan kalian. Teruslah berjuang dan jangan pernah menyerah dalam mencapai impian kalian.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => true,
             ],
             [
-                'title' => 'Wasiat Bisnis',
+                'title' => 'Surat Bisnis',
                 'content' => 'Untuk rekan bisnis, perusahaan ini harus tetap berjalan sesuai visi yang telah kita bangun bersama. Pertahankan kepercayaan pelanggan dan kesejahteraan karyawan.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => false,
             ],
             [
                 'title' => 'Pesan untuk Sahabat',
                 'content' => 'Sahabatku, terima kasih telah menjadi teman sejati dalam suka dan duka. Jangan pernah lupa kenangan indah yang telah kita lewati bersama.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => false,
             ],
             [
-                'title' => 'Wasiat Harta',
+                'title' => 'Surat Harta',
                 'content' => 'Semua harta yang saya miliki akan dibagikan secara adil kepada keluarga. Pastikan setiap orang mendapat bagian yang sesuai dengan kebutuhan mereka.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => true,
             ],
             [
                 'title' => 'Pesan Rohani',
                 'content' => 'Jangan pernah lupa untuk selalu berdoa dan mendekatkan diri kepada Tuhan. Iman adalah fondasi terkuat dalam menghadapi segala cobaan hidup.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => false,
             ],
             [
-                'title' => 'Wasiat Pendidikan',
+                'title' => 'Surat Pendidikan',
                 'content' => 'Pendidikan adalah investasi terbaik untuk masa depan. Pastikan anak-anak mendapatkan pendidikan terbaik yang bisa kalian berikan.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => false,
             ],
             [
                 'title' => 'Pesan untuk Pasangan',
                 'content' => 'Terima kasih telah menjadi pasangan hidup yang luar biasa. Semoga kalian menemukan kebahagiaan baru dan tidak pernah melupakan cinta yang telah kita bangun.',
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => true,
             ],
         ];
@@ -87,7 +87,7 @@ class LARASeeder extends Seeder
                 'title' => fake()->sentence(3),
                 'content' => fake()->paragraph(3),
                 'pemilik_id' => $users->random()->id,
-                'penerima_id' => $users->random()->id,
+                'recipient_email' => fake()->email(),
                 'is_released' => fake()->boolean(20), // 20% chance of being released
             ]);
         }

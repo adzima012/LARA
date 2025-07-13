@@ -10,9 +10,9 @@ Route::get('/', function () {
 });
 
 // Halaman dashboard - hanya untuk user login & terverifikasi
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [LARAController::class, 'getDashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Grup rute yang hanya bisa diakses oleh user yang login
 Route::middleware(['auth'])->group(function () {

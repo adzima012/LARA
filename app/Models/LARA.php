@@ -12,8 +12,9 @@ class LARA extends Model
         'title',
         'content',
         'file_path',
+        'image_path',
         'pemilik_id',
-        'penerima_id',
+        'recipient_email',
         'is_released',
     ];
 
@@ -24,10 +25,5 @@ class LARA extends Model
     public function pemilik()
     {
         return $this->belongsTo(User::class, 'pemilik_id');
-    }
-
-    public function penerima()
-    {
-        return $this->belongsTo(User::class, 'penerima_id');
     }
 }

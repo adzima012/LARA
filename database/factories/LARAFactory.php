@@ -18,15 +18,15 @@ class LARAFactory extends Factory
     public function definition(): array
     {
         $titles = [
-            'Wasiat Keluarga',
+            'Surat Keluarga',
             'Pesan Terakhir',
-            'Wasiat Bisnis',
+            'Surat Bisnis',
             'Pesan untuk Anak-anak',
-            'Wasiat Harta',
+            'Surat Harta',
             'Pesan Rohani',
-            'Wasiat Pendidikan',
+            'Surat Pendidikan',
             'Pesan untuk Pasangan',
-            'Wasiat Investasi',
+            'Surat Investasi',
             'Pesan untuk Sahabat',
         ];
 
@@ -47,8 +47,13 @@ class LARAFactory extends Factory
             'title' => fake()->randomElement($titles),
             'content' => fake()->randomElement($contents) . ' ' . fake()->paragraph(),
             'file_path' => fake()->optional(0.3)->filePath(), // 30% chance of having a file
+            'image_path' => fake()->optional(0.4)->randomElement([
+                'will-images/sample1.jpg',
+                'will-images/sample2.jpg',
+                'will-images/sample3.jpg',
+            ]), // 40% chance of having an image
             'pemilik_id' => User::factory(),
-            'penerima_id' => User::factory(),
+            'recipient_email' => fake()->email(),
             'is_released' => fake()->boolean(20), // 20% chance of being released
         ];
     }

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-6">
     <div class="max-w-6xl mx-auto">
@@ -10,8 +11,8 @@
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pink-500/30 to-transparent"></div>
                 <div class="flex justify-between items-center">
                     <div>
-                        <h1 class="text-3xl font-serif font-bold text-white mb-2">Dashboard Wasiat Digital</h1>
-                        <p class="text-gray-300 font-medium">Kelola dan temukan wasiat digital Anda</p>
+                        <h1 class="text-3xl font-serif font-bold text-white mb-2">Dashboard Surat Digital</h1>
+                        <p class="text-gray-300 font-medium">Kelola dan temukan surat digital Anda</p>
                     </div>
                     <div class="text-right">
                         <div class="text-xs text-gray-400 font-mono">User ID: {{ auth()->id() }}</div>
@@ -36,7 +37,7 @@
                     <div class="order-2 sm:order-1">
                         <a href="{{ route('laras.create') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             <i class="fas fa-feather mr-2"></i>
-                            Buat Wasiat Baru
+                            Buat Surat Baru
                         </a>
                     </div>
                     
@@ -53,14 +54,13 @@
                                 value="{{ request('search') }}"
                             >
                             @if(request('search'))
-                                <button 
-                                    type="button" 
-                                    onclick="window.location='{{ route('dashboard') }}'" 
+                                <a 
+                                    href="{{ route('dashboard') }}"
                                     class="absolute inset-y-0 right-12 flex items-center pr-2 text-gray-400 hover:text-pink-400 transition-colors duration-300"
                                     title="Hapus pencarian"
                                 >
                                     <i class="fas fa-times"></i>
-                                </button>
+                                </a>
                             @endif
                             <button 
                                 type="submit" 
@@ -73,47 +73,144 @@
                     </form>
                 </div>
 
-                <!-- Empty State with Emotional Design -->
-                <div class="text-center py-16">
-                    <div class="w-40 h-40 bg-pink-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-pink-500/20 relative">
-                        <i class="fas fa-scroll text-pink-400 text-5xl"></i>
-                        <!-- Floating elements for emotional effect -->
-                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-pink-500/20 rounded-full flex items-center justify-center">
-                            <i class="fas fa-heart text-pink-400 text-xs"></i>
-                        </div>
-                        <div class="absolute -bottom-2 -left-2 w-6 h-6 bg-pink-500/15 rounded-full flex items-center justify-center">
-                            <i class="fas fa-star text-pink-300 text-xs"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="max-w-md mx-auto">
-                        <h3 class="text-2xl font-serif font-semibold text-white mb-4">Belum Ada Wasiat Digital</h3>
-                        <p class="text-gray-300 mb-6 leading-relaxed">
-                            Anda belum membuat wasiat digital apapun. Mulailah dengan menulis pesan terakhir untuk orang yang Anda kasihi.
-                        </p>
-                        <p class="text-gray-400 text-sm mb-8">
-                            Setiap kata yang Anda tulis akan menjadi warisan berharga bagi mereka yang Anda tinggalkan.
-                        </p>
-                        
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="{{ route('laras.create') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-300 inline-flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                                <i class="fas fa-feather mr-3"></i>
-                                Buat Wasiat Pertama
-                            </a>
-                            <a href="{{ route('laras.index') }}" class="border-2 border-gray-600 text-gray-300 hover:bg-gray-700/50 hover:border-gray-500 font-medium px-8 py-4 rounded-lg transition-all duration-300 inline-flex items-center justify-center">
-                                <i class="fas fa-list mr-3"></i>
-                                Lihat Semua Wasiat
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Emotional quote -->
-                    <div class="mt-12 p-6 bg-pink-500/10 border-l-4 border-pink-500/50 rounded-r-lg max-w-lg mx-auto">
-                        <div class="flex items-start">
-                            <i class="fas fa-quote-left text-pink-400 mt-1 mr-3 text-lg"></i>
-                            <div class="text-sm text-gray-300 italic">
-                                "Kata-kata yang ditulis dengan hati akan selalu hidup dalam ingatan mereka yang membaca."
+                @if($receivedLetters->isEmpty() && $sentLetters->isEmpty())
+                    <!-- Empty State with Emotional Design -->
+                    <div class="text-center py-16">
+                        <div class="w-40 h-40 bg-pink-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-pink-500/20 relative">
+                            <i class="fas fa-scroll text-pink-400 text-5xl"></i>
+                            <!-- Floating elements for emotional effect -->
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-pink-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-heart text-pink-400 text-xs"></i>
                             </div>
+                            <div class="absolute -bottom-2 -left-2 w-6 h-6 bg-pink-500/15 rounded-full flex items-center justify-center">
+                                <i class="fas fa-star text-pink-300 text-xs"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="max-w-md mx-auto">
+                            <h3 class="text-2xl font-serif font-semibold text-white mb-4">Belum Ada Surat Digital</h3>
+                            <p class="text-gray-300 mb-6 leading-relaxed">
+                                Anda belum membuat atau menerima surat digital apapun. Mulailah dengan menulis pesan untuk orang yang Anda kasihi.
+                            </p>
+                            <p class="text-gray-400 text-sm mb-8">
+                                Setiap kata yang Anda tulis akan menjadi warisan berharga bagi mereka yang Anda tinggalkan.
+                            </p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                                <a href="{{ route('laras.create') }}" class="bg-pink-500 hover:bg-pink-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-300 inline-flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                    <i class="fas fa-feather mr-3"></i>
+                                    Buat Surat Pertama
+                                </a>
+                                <a href="{{ route('laras.index') }}" class="border-2 border-gray-600 text-gray-300 hover:bg-gray-700/50 hover:border-gray-500 font-medium px-8 py-4 rounded-lg transition-all duration-300 inline-flex items-center justify-center">
+                                    <i class="fas fa-list mr-3"></i>
+                                    Lihat Semua Surat
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <!-- Letters Grid -->
+                    @if($receivedLetters->isNotEmpty())
+                        <div class="mb-12">
+                            <h2 class="text-xl font-serif font-semibold text-white mb-6 flex items-center">
+                                <i class="fas fa-envelope-open-text text-pink-400 mr-3"></i>
+                                Surat yang Diterima
+                            </h2>
+                            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                @foreach($receivedLetters as $letter)
+                                    <div class="bg-gray-700/50 border-2 border-gray-600 rounded-lg p-6 hover:border-pink-500/50 hover:bg-gray-700/70 transition-all duration-300 group relative overflow-hidden">
+                                        <div class="relative z-10">
+                                            <div class="flex justify-between items-start mb-4">
+                                                <a href="{{ route('laras.show', $letter) }}" class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300 hover:text-pink-400">{{ $letter->title }}</a>
+                                            </div>
+                                            
+                                            <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
+                                                <p class="text-gray-300 text-sm leading-relaxed line-clamp-3 font-serif">
+                                                    {{ Str::limit($letter->content, 120) }}
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="flex items-center text-gray-400 text-sm mb-4 bg-gray-800/30 rounded-lg p-3">
+                                                <i class="fas fa-user text-pink-400 mr-2"></i>
+                                                <span>Dari: {{ $letter->pemilik->name }}</span>
+                                            </div>
+                                            
+                                            <div class="flex items-center text-xs text-gray-500">
+                                                <i class="fas fa-calendar mr-2"></i>
+                                                <span>{{ $letter->created_at->format('d M Y') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @if($receivedLetters->hasPages())
+                                <div class="mt-6 flex justify-center">
+                                    {{ $receivedLetters->links() }}
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+
+                    @if($sentLetters->isNotEmpty())
+                        <div class="mb-8">
+                            <h2 class="text-xl font-serif font-semibold text-white mb-6 flex items-center">
+                                <i class="fas fa-paper-plane text-pink-400 mr-3"></i>
+                                Surat yang Dikirim
+                            </h2>
+                            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                @foreach($sentLetters as $letter)
+                                    <div class="bg-gray-700/50 border-2 border-gray-600 rounded-lg p-6 hover:border-pink-500/50 hover:bg-gray-700/70 transition-all duration-300 group relative overflow-hidden">
+                                        <div class="relative z-10">
+                                            <div class="flex justify-between items-start mb-4">
+                                                <h3 class="text-lg font-serif font-semibold text-white group-hover:text-pink-100 transition-colors duration-300">{{ $letter->title }}</h3>
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $letter->is_released ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-pink-500/20 text-pink-300 border border-pink-500/30' }}">
+                                                    <i class="fas {{ $letter->is_released ? 'fa-unlock' : 'fa-lock' }} mr-1"></i>
+                                                    {{ $letter->is_released ? 'Dibuka' : 'Pribadi' }}
+                                                </span>
+                                            </div>
+                                            
+                                            <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-4">
+                                                <p class="text-gray-300 text-sm leading-relaxed line-clamp-3 font-serif">
+                                                    {{ Str::limit($letter->content, 120) }}
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="flex items-center text-gray-400 text-sm mb-4 bg-gray-800/30 rounded-lg p-3">
+                                                <i class="fas fa-heart text-pink-400 mr-2"></i>
+                                                <span>Untuk: {{ $letter->recipient_email }}</span>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-xs text-gray-500">
+                                                    <i class="fas fa-calendar mr-1"></i>
+                                                    {{ $letter->created_at->format('d M Y') }}
+                                                </span>
+                                                <div class="flex space-x-2">
+                                                    <a href="{{ route('laras.edit', $letter) }}" 
+                                                       class="text-gray-400 hover:text-pink-400 text-sm transition-colors duration-300 p-2 hover:bg-pink-500/10 rounded-lg">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @if($sentLetters->hasPages())
+                                <div class="mt-6 flex justify-center">
+                                    {{ $sentLetters->links() }}
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                @endif
+
+                <!-- Emotional quote -->
+                <div class="mt-12 p-6 bg-pink-500/10 border-l-4 border-pink-500/50 rounded-r-lg max-w-lg mx-auto">
+                    <div class="flex items-start">
+                        <i class="fas fa-quote-left text-pink-400 mt-1 mr-3 text-lg"></i>
+                        <div class="text-sm text-gray-300 italic">
+                            "Kata-kata yang ditulis dengan hati akan selalu hidup dalam ingatan mereka yang membaca."
                         </div>
                     </div>
                 </div>

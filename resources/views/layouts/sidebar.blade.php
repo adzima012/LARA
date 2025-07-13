@@ -23,23 +23,23 @@
                 </a>
             </li>
 
-            <!-- Create Digital Will -->
+            <!-- Create Digital Letter -->
             <li>
                 <a href="{{ route('laras.create') }}" 
                    class="flex items-center p-3 text-secondary hover:bg-accent/10 rounded-lg transition
                           {{ request()->routeIs('laras.create') ? 'bg-accent/20 text-accent' : '' }}">
                     <i class="fas fa-plus-circle text-lg w-6 text-center"></i>
-                    <span class="ml-3">Create Digital Will</span>
+                    <span class="ml-3">Create Digital Letter</span>
                 </a>
             </li>
 
-            <!-- My Digital Wills -->
+            <!-- My Digital Letters -->
             <li>
                 <a href="{{ route('laras.index') }}" 
                    class="flex items-center p-3 text-secondary hover:bg-accent/10 rounded-lg transition
                           {{ request()->routeIs('laras.index') ? 'bg-accent/20 text-accent' : '' }}">
                     <i class="fas fa-scroll text-lg w-6 text-center"></i>
-                    <span class="ml-3">My Digital Wills</span>
+                    <span class="ml-3">My Digital Letters</span>
                 </a>
             </li>
 

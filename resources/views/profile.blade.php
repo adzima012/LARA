@@ -87,7 +87,7 @@
                                     </li>
                                     <li class="flex items-start">
                                         <span class="text-pink-400 mr-2">•</span>
-                                        Wasiat digital Anda akan tetap aman meskipun akun dihapus
+                                        Surat digital Anda akan tetap aman meskipun akun dihapus
                                     </li>
                                     <li class="flex items-start">
                                         <span class="text-pink-400 mr-2">•</span>

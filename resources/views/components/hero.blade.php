@@ -35,17 +35,16 @@
             <span class="text-accent">Warisan Digital</span> Anda Tetap Hidup
         </h1>
         <p class="text-xl md:text-2xl text-text/80 mb-8 max-w-3xl mx-auto">
-                            Lara membantu Anda membuat surat digital yang akan disampaikan kepada orang-orang tercinta ketika Anda sudah tiada, memastikan warisan Anda tetap hidup.
+            Lara membantu Anda membuat surat digital yang akan disampaikan kepada orang-orang tercinta ketika Anda sudah tiada, memastikan warisan Anda tetap hidup.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#create-message" class="bg-primary hover:bg-primaryHover text-black font-medium px-8 py-4 rounded-full transition duration-300 flex items-center justify-center group">
-                <i class="fas fa-scroll mr-2 group-hover:rotate-12 transition-transform duration-300"></i> Buat Surat Digital Anda
-            </a>
+
+        <!-- Hanya tombol "Pelajari Lebih Lanjut" yang ditampilkan -->
+        <div class="flex justify-center">
             <a href="#features" class="border border-accent/30 text-accent hover:bg-accent/10 font-medium px-8 py-4 rounded-full transition duration-300">
                 Pelajari Lebih Lanjut
             </a>
         </div>
-        
+
         <!-- Elemen Dekoratif Bawah -->
         <div class="mt-16 flex justify-center space-x-4 opacity-30">
             <div class="w-2 h-2 bg-accent rounded-full animate-bounce"></div>

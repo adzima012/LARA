@@ -1,15 +1,30 @@
 <?php
 
+/**
+ * Konfigurasi Utama Aplikasi LARA
+ * 
+ * File ini berisi pengaturan dasar aplikasi seperti:
+ * - Nama aplikasi
+ * - Environment (production/development)
+ * - Debug mode
+ * - URL aplikasi
+ * - Timezone
+ * - Provider dan middleware
+ * - Dan pengaturan umum lainnya
+ */
+
 return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Name
+    | Nama Aplikasi
     |--------------------------------------------------------------------------
     |
-    | This value is the name of your application, which will be used when the
-    | framework needs to place the application's name in a notification or
-    | other UI elements where an application name needs to be displayed.
+    | Nilai ini adalah nama aplikasi yang akan digunakan dalam:
+    | - Tampilan UI
+    | - Email dan notifikasi
+    | - Log dan pesan error
+    | - Dan tempat lain yang memerlukan nama aplikasi
     |
     */
 

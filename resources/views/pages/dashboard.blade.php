@@ -1,12 +1,22 @@
+{{--
+    View Dashboard - Halaman utama setelah login
+    Menampilkan:
+    - Daftar surat digital yang dimiliki user
+    - Daftar surat digital yang diterima
+    - Statistik dan informasi ringkas
+    - Menu untuk membuat surat baru
+    
+    Menggunakan layout app.blade.php sebagai template utama
+--}}
 @extends('layouts.app')
 
-
 @section('content')
+{{-- Container utama dengan latar belakang gradient --}}
 <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-6">
     <div class="max-w-6xl mx-auto">
-        <!-- Paper-like container -->
+        {{-- Container utama dengan efek paper-like --}}
         <div class="bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-2xl overflow-hidden">
-            <!-- Paper header -->
+            {{-- Header dashboard dengan garis gradien --}}
             <div class="relative bg-gray-800 border-b border-gray-700 px-8 py-6">
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pink-500/30 to-transparent"></div>
                 <div class="flex justify-between items-center">

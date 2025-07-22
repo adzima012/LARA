@@ -1,17 +1,40 @@
 <?php
 
+/**
+ * File Test untuk Fitur Profile
+ * 
+ * File ini berisi test-test yang memastikan fitur profile berfungsi dengan benar:
+ * - Menampilkan halaman profile
+ * - Mengupdate informasi profile
+ * - Menghapus akun
+ * - Validasi password
+ */
+
 use App\Models\User;
 
+/**
+ * Test untuk memastikan halaman profile dapat diakses
+ * 
+ * @test
+ */
 test('profile page is displayed', function () {
+    // Membuat user dummy menggunakan factory
     $user = User::factory()->create();
 
+    // Simulasi request ke halaman profile sebagai user yang sudah login
     $response = $this
         ->actingAs($user)
         ->get('/profile');
 
+    // Memastikan response OK (200)
     $response->assertOk();
 });
 
+/**
+ * Test untuk memastikan informasi profile dapat diupdate
+ * 
+ * @test
+ */
 test('profile information can be updated', function () {
     $user = User::factory()->create();
 

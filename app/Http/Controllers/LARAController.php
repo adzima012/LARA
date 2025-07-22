@@ -8,15 +8,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+/**
+ * Controller untuk mengelola surat digital LARA
+ * 
+ * Controller ini menangani semua operasi terkait surat digital, termasuk:
+ * - Pembuatan surat digital baru
+ * - Penampilan daftar surat
+ * - Pengubahan surat
+ * - Penghapusan surat
+ * - Manajemen lampiran gambar
+ * - Pengelolaan hak akses surat
+ */
 class LARAController extends Controller
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests; // Trait untuk otorisasi akses
 
     /**
-     * Display a listing of the user's digital wills.
+     * Menampilkan daftar surat digital milik pengguna yang sedang login
+     * 
+     * @return \Illuminate\View\View Tampilan daftar surat digital
      */
     public function index()
     {
+        // Mengambil surat digital milik pengguna yang sedang login
+        // Diurutkan dari yang terbaru dan ditampilkan 10 per halaman
         $laras = LARA::where('pemilik_id', Auth::id())
             ->latest()
             ->paginate(10);
@@ -25,7 +40,9 @@ class LARAController extends Controller
     }
 
     /**
-     * Show the form for creating a new digital will.
+     * Menampilkan formulir untuk membuat surat digital baru
+     * 
+     * @return \Illuminate\View\View Tampilan formulir pembuatan surat
      */
     public function create()
     {
@@ -33,15 +50,19 @@ class LARAController extends Controller
     }
 
     /**
-     * Store a newly created digital will in storage.
+     * Menyimpan surat digital baru ke database
+     * 
+     * @param Request $request Request berisi data surat digital
+     * @return \Illuminate\Http\RedirectResponse Redirect ke halaman daftar surat
      */
     public function store(Request $request)
     {
+        // Validasi input dari form
         $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'recipient_email' => 'required|email|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required|string|max:255',      // Judul surat (wajib)
+            'content' => 'required|string',            // Isi surat (wajib)
+            'recipient_email' => 'required|email|max:255', // Email penerima (wajib)
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Gambar (opsional)
         ]);
 
         $data = [
@@ -160,6 +181,6 @@ class LARAController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('dashboard', compact('receivedLetters', 'sentLetters'));
+        return view('pages.dashboard', compact('receivedLetters', 'sentLetters'));
     }
 }

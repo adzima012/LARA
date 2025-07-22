@@ -74,7 +74,6 @@
         @include('components.features')
         @include('components.testimonials')
         @include('components.faq')
-        @include('components.cta')
         @include('components.footer')
     </div>
 </body>

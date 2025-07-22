@@ -101,7 +101,7 @@
 
         <!-- Quote -->
         <div class="p-4 border-t border-accent/20 text-sm italic text-accent/60 hidden md:block" x-show="!sidebarCollapsed">
-            “Warisan bukan tentang harta, tapi tentang hati yang ditinggalkan.”
+            “Akhir dari cinta bukan karena di tinggalkan, melainkan dilupakan.”
         </div>
 
         <!-- Logout -->
